@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     inputBlur() {
+      console.log(this.username.trim());
       if (!this.username.trim() || !this.password.trim()) {
         this.isPass = false;
         return this.$message({
