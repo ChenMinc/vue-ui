@@ -22,53 +22,53 @@
 
 <script>
 export default {
-  name: "Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
-      msg: "Welcome to Your Vue.js App",
-      email: "",
-      password: "",
+      msg: 'Welcome to Your Vue.js App',
+      email: '',
+      password: '',
       isPass: false,
-      labelPosition: "right"
-    };
+      labelPosition: 'right'
+    }
   },
   methods: {
-    inputBlur() {
+    inputBlur () {
       if (!this.email.trim() || !this.password.trim()) {
-        this.isPass = false;
+        this.isPass = false
         return this.$message({
-          message: "用户名或密码不能为空",
-          type: "warning"
-        });
+          message: '用户名或密码不能为空',
+          type: 'warning'
+        })
       }
-      this.isPass = true;
+      this.isPass = true
     },
-    submitForm() {
-      this.inputBlur();
-      if (!this.isPass) return;
+    submitForm () {
+      this.inputBlur()
+      if (!this.isPass) return
       this.axios.post(
-        "/users/login", {
+        '/users/login', {
           email: this.email,
           password: this.password
         }).then(res => {
-          if (res.status === 200) {       // 登录成功
-            this.LOGIN(res.data)
-            this.$router.push("/main")
-          } else {    // 登陆失败
-            console.log(11111)
-            this.$message.error(res.error)
-          }
+        if (res.status === 200) { // 登录成功
+          this.LOGIN(res.data)
+          this.$router.push('/main')
+        } else { // 登陆失败
+          console.log(11111)
+          this.$message.error(res.error)
+        }
       }).catch(err => {
         this.$message.error(err.message)
       })
     },
-    clearForm() {
-      this.email = "";
-      this.password = "";
-      this.isPass = "";
+    clearForm () {
+      this.email = ''
+      this.password = ''
+      this.isPass = ''
     }
   }
-};
+}
 </script>
 
 <style scoped>

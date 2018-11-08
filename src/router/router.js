@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 
 Vue.use(Router)
 
@@ -8,6 +9,11 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      name: 'Login',
+      component: resolve => require(['@/views/auth/Login'], resolve)
+    },
+    {
+      path: '', // 默认地址为登录页
       name: 'Login',
       component: resolve => require(['@/views/auth/Login'], resolve)
     },
@@ -46,7 +52,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) { // 如果需要拦截
-    if (true) { // TODO 从vuex或者localstore获取token判断是否已登录，如果已登录
+    if (store.state.user.token) { // TODO 从vuex或者localstore获取token判断是否已登录，如果已登录
       next()
     } else {
       next({

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '../router/router'
+import store from '../store'
 
 // axios 配置
 axios.defaults.timeout = 5000
@@ -7,7 +8,9 @@ axios.defaults.baseURL = 'http://192.168.199.108:7001/api/v1'
 
 // 请求拦截
 axios.interceptors.request.use(config => {
-  // 验证token
+  if (store.state.user.token) {
+    config.header.Authorization = `Bearer ${store.state.user.token}`
+  }
   return config
 }, error => {
   return Promise.reject(error)

@@ -13,18 +13,18 @@
 </template>
 <script>
 export default {
-  name: "UserList",
+  name: 'UserList',
   data () {
     return {
       formInline: {
-        name: "",
-        email: ""
+        name: '',
+        email: ''
       }
     }
   },
   methods: {
-    onSubmit() {
-      console.log(formInline);
+    onSubmit () {
+      console.log(this.formInline)
     }
   }
 }
