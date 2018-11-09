@@ -90,7 +90,7 @@
 </style>
 
 <script>
-import { mapState } from "vuex"
+import { mapState, mapMutations } from "vuex"
 export default {
   name: 'Main',
   data () {
@@ -100,6 +100,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['LOGOUT']),
     selectOne (row, column, cell, event) {
       console.log(row.name)
     },
@@ -110,7 +111,8 @@ export default {
           this.centerDialogVisible = true
           break
         case 1:
-          // 登出
+          this.LOGOUT()
+          this.$router.push('/')
           break
       }
     }
