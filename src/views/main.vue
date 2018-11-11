@@ -82,15 +82,13 @@
   background-color: #fff;
 }
 .intro{
-  position: fixed;
-  bottom: 0px;
   text-align: center;
   width: 100%;
 }
 </style>
 
 <script>
-import { mapState, mapMutations } from "vuex"
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Main',
   data () {
@@ -118,10 +116,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(['user'])
   },
-  mounted() {
-    this.userInfo = this.user.userInfo;
+  mounted () {
+    this.userInfo = this.user.userInfo
   }
 }
 </script>

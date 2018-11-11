@@ -3,8 +3,8 @@
         这是Setting页面
     </div>
 </template>
- <script>
+<script>
 export default {
-  name: "Setting"
-};
+  name: 'Setting'
+}
 </script>
