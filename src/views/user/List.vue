@@ -15,7 +15,7 @@
       <el-table-column prop="id" label="编号"></el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="status" label="状态"></el-table-column>
+      <el-table-column prop="status" label="状态" :formatter="formatStatus"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
       <el-table-column prop="mobile" label="电话号码"></el-table-column>
       <el-table-column prop="isAdmin" label="是否管理员" :formatter="formatIsAdmin"></el-table-column>
@@ -28,9 +28,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="page">
+      <el-pagination layout="prev, pager, next" :total="total" :background="true"></el-pagination>
+    </div>
   </div>
 </template>
+
 <script>
+import { getUserList } from '../../http/user'
 export default {
   name: 'UserList',
   data () {
@@ -39,33 +44,45 @@ export default {
         name: '',
         email: ''
       },
+      total: 0,
       tableData: [
         { id: 1, name: 'gouduenzi', age: 17, status: 'gg', email: 'jj@s.com', company: '', mobile: '1363636456', isAdmin: 'yes', info: '' }
       ]
     }
   },
   methods: {
+    formatIsAdmin (row, column, cellValue) {
+      return cellValue ? '是' : '否'
+    },
+    formatStatus (row, column, cellValue) {
+      return cellValue === 'ok' ? '正常' : '已禁用'
+    },
+    handleClick (row) {
+      console.log('当前row数据：', row)
+    },
     onSubmit () {
       console.log(this.formInline)
     }
   },
   mounted () {
-    this.axios
-      .get('/users')
-      .then(res => {
-        this.tableData = res.data.rows
-        this.tableData = res.data.rows
-      })
-      .catch(err => {
-        this.$message.error(err.message)
-      })
+    getUserList().then(res => {
+      this.tableData = res.rows
+      this.total = this.tableData.length
+    }).catch(err => {
+      this.$message.error(err.message)
+    })
   }
 }
 </script>
+
 <style scoped>
 .search {
   width: 100%;
   height: 100%;
   text-align: left;
+}
+.page {
+  text-align: center;
+  margin-top: 20px;
 }
 </style>

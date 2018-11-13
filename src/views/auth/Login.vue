@@ -24,6 +24,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { login } from '../../http/user'
 export default {
   name: 'Login',
   data () {
@@ -62,21 +63,13 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.axios
-            .post('/users/login', {
-              email: this.ruleForm.email,
-              password: this.ruleForm.password
-            })
-            .then(res => {
-              if (res.status === 200) {
-                // 登录成功
-                this.LOGIN(res.data)
-                this.$router.push('/main')
-              } else {
-                // 登陆失败
-                this.$message.error(res.error)
-              }
-            })
+          login({
+            email: this.ruleForm.email,
+            password: this.ruleForm.password
+          }).then(res => {
+            this.LOGIN(res)
+            this.$router.push('/main')
+          })
             .catch(err => {
               this.$message.error(err.message)
             })

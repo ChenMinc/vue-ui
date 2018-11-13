@@ -6,7 +6,7 @@ import store from './store/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import axios from './http/base'
+import { axios } from './http/base'
 
 // 挂载vue.prototype上可直接使用this.axios
 Vue.prototype.axios = axios
