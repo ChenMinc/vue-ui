@@ -33,8 +33,8 @@ export default {
       isPass: false,
       labelPosition: 'right',
       ruleForm: {
-        email: '',
-        password: ''
+        email: 'sky_cmc@163.com',
+        password: 's1120080283'
       },
       rules: {
         email: [
@@ -50,6 +50,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(["LOGIN"]),
     inputBlur () {
       if (!this.email.trim() || !this.password.trim()) {
         this.isPass = false
@@ -67,8 +68,13 @@ export default {
             email: this.ruleForm.email,
             password: this.ruleForm.password
           }).then(res => {
-            this.LOGIN(res)
-            this.$router.push('/main')
+            console.log(res);
+            if (res.code === 0) {
+              this.LOGIN(res.data);
+              this.$router.push('/main')
+            } else {
+              this.$message.error(res.message)
+            }
           })
             .catch(err => {
               this.$message.error(err.message)

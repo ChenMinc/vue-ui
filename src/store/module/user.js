@@ -2,7 +2,7 @@ import * as TYPES from '../mutation.types'
 
 const state = {
   userInfo: JSON.parse(localStorage.getItem('userInfo')) || '{}',
-  token: localStorage.getItem('token') || '1'
+  token: localStorage.getItem('token') || ''
 }
 
 const actions = {}

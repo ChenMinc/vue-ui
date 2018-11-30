@@ -22,28 +22,35 @@ const router = new Router({
       name: 'Main',
       component: resolve => require(['@/views/Main'], resolve),
       meta: {
-        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true
       },
       children: [{
+        path: 'article',
+        name: 'ArticleList',
+        component: resolve => require(['@/views/article/List'], resolve),
+        meta: {
+          requireAuth: true
+        }
+      }, {
         path: 'user',
         name: 'UserList',
         component: resolve => require(['@/views/user/List'], resolve),
         meta: {
-          requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+          requireAuth: true
         }
       }, {
         path: 'user/setting',
         name: 'Setting',
         component: resolve => require(['@/views/user/Setting'], resolve),
         meta: {
-          requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+          requireAuth: true
         }
       }, {
         path: '',
         name: 'Welcome',
         component: resolve => require(['@/views/common/Welcome'], resolve),
         meta: {
-          requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+          requireAuth: true
         }
       }]
     }

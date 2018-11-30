@@ -1,8 +1,9 @@
 module.exports = {
+  assetsDir: 'public',
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://216.250.107.28:' + 7001,
+        target: 'http://192.168.199.108:' + 7001,
         ws: true,
         changeOrigin: true
       }
