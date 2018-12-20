@@ -8,8 +8,8 @@ axios.defaults.baseURL = '/api/v1'
 
 // 请求拦截
 axios.interceptors.request.use(config => {
-  if (store.state.user.token) {
-    config.header.Authorization = `Bearer ${store.state.user.token}`
+  if (store.state.user.token && config.url !== '/users/login') {
+    config.headers.Authorization = `Bearer ${store.state.user.token}`
   }
   return config
 }, error => {

@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["LOGIN"]),
+    ...mapMutations(['LOGIN']),
     inputBlur () {
       if (!this.email.trim() || !this.password.trim()) {
         this.isPass = false
@@ -68,9 +68,9 @@ export default {
             email: this.ruleForm.email,
             password: this.ruleForm.password
           }).then(res => {
-            console.log(res);
+            console.log(res)
             if (res.code === 0) {
-              this.LOGIN(res.data);
+              this.LOGIN(res.data)
               this.$router.push('/main')
             } else {
               this.$message.error(res.message)
