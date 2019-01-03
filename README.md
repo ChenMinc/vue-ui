@@ -1,6 +1,5 @@
 # vue-ui
 vue搭建blog后台系统
-采用vue第三代脚手架vue-cli3
 
 ### Development
 
