@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { getUserList } from '../../http/user'
 export default {
   name: 'UserList',
   data () {
@@ -65,7 +64,7 @@ export default {
     }
   },
   mounted () {
-    getUserList().then(res => {
+    this.$http.getUserList().then(res => {
       this.tableData = res.rows
       this.total = this.tableData.length
     }).catch(err => {

@@ -1,10 +1,10 @@
 import * as http from './base'
 /**
 * 登陆
-* @param {object} data
+* @param {object} params
 */
-const login = (data) => {
-  return http.post('/users/login', data)
+const login = (params) => {
+  return http.post('/users/login', params)
 }
 /**
 * 登出

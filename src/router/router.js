@@ -32,6 +32,27 @@ const router = new Router({
           requireAuth: true
         }
       }, {
+        path: 'article/add',
+        name: 'ArticleAdd',
+        component: resolve => require(['@/views/article/Add'], resolve),
+        meta: {
+          requireAuth: true
+        }
+      }, {
+        path: 'article/revise',
+        name: 'ArticleRevise',
+        component: resolve => require(['@/views/article/Revise'], resolve),
+        meta: {
+          requireAuth: true
+        }
+      }, {
+        path: 'tag',
+        name: 'TagList',
+        component: resolve => require(['@/views/tag/List'], resolve),
+        meta: {
+          requireAuth: true
+        }
+      }, {
         path: 'user',
         name: 'UserList',
         component: resolve => require(['@/views/user/List'], resolve),
@@ -40,7 +61,7 @@ const router = new Router({
         }
       }, {
         path: 'user/setting',
-        name: 'Setting',
+        name: 'UserSetting',
         component: resolve => require(['@/views/user/Setting'], resolve),
         meta: {
           requireAuth: true

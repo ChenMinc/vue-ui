@@ -6,4 +6,8 @@ import * as http from './base'
 const getArticlesList = (params) => {
   return http.fetch('/articles', params)
 }
-export { getArticlesList }
+
+const updateArticles = (params) => {
+  return http.post('/articles', params)
+}
+export { getArticlesList, updateArticles }

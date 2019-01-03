@@ -24,7 +24,6 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { login } from '../../http/user'
 export default {
   name: 'Login',
   data () {
@@ -64,7 +63,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          login({
+          this.$http.login({
             email: this.ruleForm.email,
             password: this.ruleForm.password
           }).then(res => {
