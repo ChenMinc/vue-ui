@@ -1,3 +1,4 @@
 import * as user from './user'
 import * as articles from './articles'
-export default Object.assign(user, articles)
+import * as tags from './tags'
+export default Object.assign(user, articles, tags)

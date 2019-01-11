@@ -1,5 +1,5 @@
 <template>
-    <div class="article-add">
+    <div class="article-editor">
       <el-form :inline="true" class="form-inline">
         <el-form-item>
           <el-input v-model="article.title" placeholder="标题"></el-input>
@@ -9,7 +9,7 @@
             v-model="tag"
             multiple
             filterable
-            allow-create
+            reserve-keyword
             default-first-option
             placeholder="标签">
             <el-option
@@ -45,22 +45,28 @@ export default {
     return {
       article: {
         title: '',
-        // tag: [],
+        tags: [],
         status: '',
         content: ''
       },
       tag: [],
-      tagSelect: [{
-        value: 'HTML',
-        label: 'HTML'
-      }, {
-        value: 'CSS',
-        label: 'CSS'
-      }, {
-        value: 'JavaScript',
-        label: 'JavaScript'
-      }],
-      lastPath: null
+      tagSelect: [],
+      lastPath: null,
+      tagSelectMap: new Map()
+    }
+  },
+  watch: {
+    tag: function (val) {
+      const arr = val.concat().sort((val1, val2) => {
+        return val1 - val2
+      })
+      this.article.tags.splice(0, this.article.tags.length)
+      arr.forEach(item => {
+        const params = {}
+        params.tagId = item
+        params.tagName = this.tagSelectMap.get(item)
+        this.article.tags.push(params)
+      })
     }
   },
   methods: {
@@ -80,24 +86,11 @@ export default {
         })
       }
       this.isPass = true
-      this.$http.updateArticles(this.article).then(res => {
-        if (res.code === 0) {
-          const { title } = this.article
-          this.$notify({
-            title: '上传成功',
-            message: '《' + title + '》' + '文章上传成功',
-            type: 'success'
-          })
-          console.log(this.$router)
-          this.$router.replace('/main/article')
-        } else {
-          this.$message.error(res.message)
-        }
-      }).catch(err => {
-        this.$message.error(err.message)
-      })
+      // 添加/更新文章
+      this.$emit('articleHandle', this.article, this.initSaveArticle)
     },
     saveArticle () {
+      console.log(JSON.stringify(this.tagSelect))
       this.updateContent()
       this['ARTICLE' + this.lastPath.toUpperCase() + 'UPDATE'](this.article)
       this.$notify({
@@ -108,9 +101,46 @@ export default {
     },
     updateContent () {
       this.article.content = this.$refs.editor.getValue()
+    },
+    initSaveArticle () {
+      const article = {
+        title: '',
+        tags: [],
+        status: '',
+        content: ''
+      }
+      this.article = article
+      this['ARTICLE' + this.lastPath.toUpperCase() + 'UPDATE'](article)
     }
   },
   created () {
+    // 获取tags
+    this.$http.getTagsAll().then(res => {
+      if (res.code === 0) {
+        for (let i in res.data) {
+          const params = {}
+          params.value = res.data[i].tagId
+          params.label = res.data[i].tagName
+          this.tagSelectMap.set(params.value, params.label)
+          this.tagSelect.push(params)
+        }
+        const arr = this.tag.concat().sort((val1, val2) => {
+          return val1 - val2
+        })
+        this.article.tags = []
+        arr.forEach(item => {
+          const params = {}
+          params.tagId = item
+          params.tagName = this.tagSelectMap.get(item)
+          this.article.tags.push(params)
+        })
+      } else {
+        this.$message(res.message)
+      }
+    }).catch(err => {
+      this.$message.error(err.message)
+    })
+
     const path = this.$route.path
     this.lastPath = path.substr(path.lastIndexOf('/') + 1)
     if (this.$route.params.row) {
@@ -118,11 +148,16 @@ export default {
     } else if (this.lastPath && this.$store.state.articleEditor[this.lastPath]) {
       this.article = this.$store.state.articleEditor[this.lastPath]
     }
+
+    // 标签格式化
+    for (let i in this.article.tags) {
+      this.tag.push(this.article.tags[i].tagId)
+    }
   }
 }
 </script>
 <style scoped>
-  .article-add {
+  .article-editor {
     text-align: left;
   }
   .status {

@@ -53,6 +53,20 @@ const router = new Router({
           requireAuth: true
         }
       }, {
+        path: 'tag/add',
+        name: 'TagAdd',
+        component: resolve => require(['@/views/tag/Add'], resolve),
+        meta: {
+          requireAuth: true
+        }
+      }, {
+        path: 'tag/revise',
+        name: 'TagRevise',
+        component: resolve => require(['@/views/tag/Revise'], resolve),
+        meta: {
+          requireAuth: true
+        }
+      }, {
         path: 'user',
         name: 'UserList',
         component: resolve => require(['@/views/user/List'], resolve),

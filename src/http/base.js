@@ -19,7 +19,8 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   return response
 }, error => {
-  console.error('222222222', error)
+  console.error(error)
+  this.$message.error(error)
   if (error.response) {
     switch (error.response.status) {
       case 401:

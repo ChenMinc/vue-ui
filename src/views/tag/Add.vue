@@ -1,31 +1,30 @@
 <template>
-    <div class="article-add">
-      <articleEditor @articleHandle="articleAdd" />
+    <div class="tag-add">
+      <tagEditor @tagHandle="tagAdd" />
     </div>
 </template>
 <script>
-import articleEditor from '@/components/articleEditor'
+import tagEditor from '@/components/tagEditor'
 export default {
-  name: 'ArticleAdd',
+  name: 'TagAdd',
   components: {
-    articleEditor
+    tagEditor
   },
   data () {
     return {
     }
   },
   methods: {
-    articleAdd (articleData, successCallBack) {
-      this.$http.createArticles(articleData).then(res => {
+    tagAdd (tagData) {
+      this.$http.createTags(tagData).then(res => {
+        const { tagName } = tagData
         if (res.code === 0) {
-          const { title } = articleData
           this.$notify({
             title: '添加成功',
-            message: '文章' + '《' + title + '》' + '添加成功',
+            message: '标签"' + tagName + '"添加成功',
             type: 'success'
           })
-          successCallBack()
-          return this.$router.replace('/main/article')
+          return this.$router.replace('/main/tag')
         } else {
           return this.$message({
             message: res.message,
