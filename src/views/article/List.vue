@@ -4,7 +4,7 @@
       <el-form-item>
         <el-input v-model="keywordInpout" placeholder="标题关键字"></el-input>
       </el-form-item>
-      <el-form-item>
+      <!-- <el-form-item>
         <el-select
           v-model="tag"
           placeholder="筛选标签">
@@ -15,7 +15,7 @@
             :value="item.value">
           </el-option>
         </el-select>
-      </el-form-item>
+      </el-form-item> -->
       <el-button-group>
         <el-button @click="searchSubmit" type="primary" icon="el-icon-search">查询</el-button>
         <el-button @click="$router.push('/main/article/add')" icon="el-icon-edit-outline">新增</el-button>
@@ -65,11 +65,11 @@ export default {
       keyword: '',
       total: 0,
       curPage: 1,
-      tableData: [],
-      tag: 'all',
-      tagSelect: [
-        { 'value': 'all', 'label': '全部标签' }
-      ]
+      tableData: []
+      // tag: 'all',
+      // tagSelect: [
+      //   { 'value': 'all', 'label': '全部标签' }
+      // ]
     }
   },
   methods: {
@@ -128,11 +128,10 @@ export default {
       this.curPage = page
       const params = { page }
       params.keyword = this.keyword
-      if (this.tag !== 'all' ) {
-        params.tag = this.tag
-      }
+      // if (this.tag !== 'all') {
+      //   params.tag = this.tag
+      // }
       this.$http.getArticlesList(params).then(res => {
-        console.log(res)
         res.data.rows.forEach(item => {
           item.updatedTime = moment(new Date(item.updatedAt)).format('YYYY-MM-DD HH:mm:ss')
         })
@@ -143,23 +142,23 @@ export default {
       })
     }
   },
-  created () {
-    // 获取tags
-    this.$http.getTagsAll().then(res => {
-      if (res.code === 0) {
-        for (let i in res.data) {
-          const params = {}
-          params.value = res.data[i].tagId
-          params.label = res.data[i].tagName
-          this.tagSelect.push(params)
-        }
-      } else {
-        this.$message(res.message)
-      }
-    }).catch(err => {
-      this.$message.error(err.message)
-    })
-  },
+  // created () {
+  //   // 获取tags
+  //   this.$http.getTagsAll().then(res => {
+  //     if (res.code === 0) {
+  //       for (let i in res.data) {
+  //         const params = {}
+  //         params.value = res.data[i].tagId
+  //         params.label = res.data[i].tagName
+  //         this.tagSelect.push(params)
+  //       }
+  //     } else {
+  //       this.$message(res.message)
+  //     }
+  //   }).catch(err => {
+  //     this.$message.error(err.message)
+  //   })
+  // },
   mounted () {
     this.getArticlesList(this.curPage)
   }

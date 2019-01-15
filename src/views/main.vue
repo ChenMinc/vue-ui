@@ -22,20 +22,6 @@
             <i class="el-icon-news"></i>
             <span slot="title">标签管理</span>
           </el-menu-item>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-mobile-phone"></i>设备管理
-            </template>
-            <el-menu-item index="3-2" route="/main/device">设备列表</el-menu-item>
-            <el-menu-item index="3-1" route="/main/device/add">新增设备</el-menu-item>
-          </el-submenu>
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-setting"></i>系统设置
-            </template>
-            <el-menu-item index="4-1" route="/main/user">用户管理</el-menu-item>
-            <el-menu-item index="4-2" route="/main/user/setting">资料设置</el-menu-item>
-          </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>

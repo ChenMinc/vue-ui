@@ -17,6 +17,14 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
+  if (response.data.code !== 0) {
+    switch (response.data.code) {
+      case 401:
+        // TODO 清除token信息
+        router.replace({ path: '/', query: { redirect: router.currentRoute.fullPath } })
+        break
+    }
+  }
   return response
 }, error => {
   console.error(error)
